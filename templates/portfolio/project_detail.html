@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} | حبیب‌الله رحیمی{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="glass detail-card">
+        <h2>{{ project.title }}</h2>
+        {% if project.tech %}<p class="tech">{{ project.tech }}</p>{% endif %}
+        <p>{{ project.description }}</p>
+        {% if project.link %}
+        <a href="{{ project.link }}" target="_blank" class="btn">مشاهده پروژه</a>
+        {% endif %}
+        <br><br>
+        <a href="{% url 'projects' %}" class="btn btn-ghost">← برگشت به پروژه‌ها</a>
+    </div>
+</section>
+{% endblock %}

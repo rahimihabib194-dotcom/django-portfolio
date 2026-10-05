@@ -1,0 +1,18 @@
+# Render Blueprint — دیپلوی خودکار با یک کلیک
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: django-portfolio
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"
+    startCommand: "python manage.py migrate && gunicorn config.wsgi --log-file -"
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ".onrender.com,habibullahrahimi.com,www.habibullahrahimi.com"
+      - key: PYTHON_VERSION
+        value: "3.12.7"

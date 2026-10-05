@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}حبیب‌الله رحیمی | توسعه‌دهنده{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- پس‌زمینه سه‌بعدی -->
+    <canvas id="bg3d"></canvas>
+
+    <nav class="glass nav">
+        <a href="{% url 'home' %}" class="logo">حبیب‌الله رحیمی</a>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">خانه</a>
+            <a href="{% url 'projects' %}">پروژه‌ها</a>
+            <a href="{% url 'contact' %}">تماس</a>
+        </div>
+    </nav>
+
+    <main>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="glass alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>ساخته شده با جنگو و Three.js — © ۱۴۰۳</p>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
