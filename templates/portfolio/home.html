@@ -1,60 +1,269 @@
-{% extends "base.html" %}
 {% load static %}
-{% block title %}خانه | حبیب‌الله رحیمی{% endblock %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="icon" href="data:,">
+  <title>Habibullah Rahimi — Developer</title>
+  <style>
+    @font-face{font-family:"Habib Sans";src:url("{% static 'fonts/font-1.ttf' %}") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:"Habib Sans";src:url("{% static 'fonts/font-2.ttf' %}") format("truetype");font-weight:600;font-style:normal;font-display:swap}
+    @font-face{font-family:"Habib Sans";src:url("{% static 'fonts/font-3.ttf' %}") format("truetype");font-weight:700 900;font-style:normal;font-display:swap}
+    @font-face{font-family:"Habib Serif";src:url("{% static 'fonts/font-4.ttf' %}") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+    @font-face{font-family:"Habib Serif";src:url("{% static 'fonts/font-5.ttf' %}") format("truetype");font-weight:600 900;font-style:normal;font-display:swap}
+    :root{
+      color-scheme:dark;
+      --ink:#09090a;--ink-2:#0f0f10;--bone:#e8e0d0;--bone-2:#bcb4a5;
+      --ash:#78746d;--line:#2d2c2a;--gold:#c9a227;--gold-soft:#8f7623;
+      --display:"Habib Serif",Georgia,serif;
+      --body:"Habib Sans","Segoe UI",sans-serif;
+      --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+      --max:1240px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--ink)}
+    body{margin:0;background:var(--ink);color:var(--bone);font-family:var(--body);line-height:1.7;overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;z-index:20;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E")}
+    a{color:inherit;text-decoration:none} button,input,textarea{font:inherit} button{color:inherit}
+    .wrap{width:min(var(--max),calc(100% - 56px));margin-inline:auto}
+    .mono{font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase}
+    .site-nav{position:fixed;inset-block-start:20px;inset-inline:0;z-index:30;pointer-events:none}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;gap:20px}
+    .nav-links,.lang-switch{pointer-events:auto;background:rgba(10,10,11,.88);border:1px solid var(--line)}
+    .nav-links{display:flex;gap:2px;padding:5px}
+    .nav-links a{font:600 10px/1 var(--mono);letter-spacing:.08em;padding:10px 12px;color:var(--bone-2);transition:.2s}
+    .nav-links a:hover,.nav-links a:focus-visible{background:var(--bone);color:var(--ink)}
+    .lang-switch{display:flex;padding:4px;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+    .lang-switch button{border:0;background:none;padding:9px 13px;font:700 11px/1 var(--mono);cursor:pointer;color:var(--ash)}
+    .lang-switch button.active{background:var(--gold);color:#090909}
+    .hero{min-height:100svh;display:flex;align-items:center;padding:145px 0 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+    .hero-inner{position:relative;z-index:1;width:100%}
+    .dossier{display:flex;align-items:center;gap:14px;font:700 11px/1.6 var(--mono);color:var(--gold);margin-bottom:32px}
+    .dossier:before{content:"";width:38px;height:1px;background:var(--gold);flex:0 0 auto}
+    .hero h1{margin:0;max-width:1120px;font-family:var(--display);font-size:clamp(4rem,8.6vw,8.25rem);font-weight:400;line-height:.95;letter-spacing:-.055em;text-wrap:balance}
+    html[lang="fa"] .hero h1{font-family:var(--body);font-weight:700;letter-spacing:-.045em;line-height:1.24;max-width:1050px}
+    .hero h1 em{font-style:normal;color:var(--gold)}
+    .hero-sub{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:60px;margin-top:42px;align-items:end}
+    .hero-sub p{font-size:clamp(1.08rem,1.8vw,1.4rem);line-height:1.85;margin:0;max-width:720px;color:var(--bone-2)}
+    .hero-aside{display:flex;justify-content:flex-end;align-items:center;gap:14px;font:11px var(--mono);color:var(--ash);white-space:nowrap}
+    .hero-aside .dot{width:8px;height:8px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 5px rgba(201,162,39,.12)}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+    .hero-action{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 20px;border:1px solid var(--line);font-weight:700;font-size:.9rem;transition:background .2s,border-color .2s,color .2s}
+    .hero-action.primary{background:var(--gold);border-color:var(--gold);color:#090909}
+    .hero-action:hover,.hero-action:focus-visible{background:var(--bone);border-color:var(--bone);color:var(--ink)}
+    .hero-skills{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:62px;padding-top:22px;border-top:1px solid var(--line);color:var(--ash);font:11px var(--mono);letter-spacing:.04em}
+    .hero-skills strong{color:var(--bone);font-weight:600}
+    section{position:relative;border-bottom:1px solid var(--line)}
+    .manifesto{padding:140px 0;overflow:hidden}
+    .manifesto blockquote{margin:0;max-width:1100px;font-family:var(--display);font-size:clamp(2.2rem,5.2vw,5.4rem);line-height:1.08;letter-spacing:-.035em}
+    html[lang="fa"] .manifesto blockquote{font-family:var(--body);font-weight:600;line-height:1.55;letter-spacing:-.025em}
+    .manifesto em{font-style:normal;color:var(--gold)}
+    .manifesto .sign{margin-top:44px;color:var(--ash);font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+    .chapter{padding:128px 0 118px;overflow:hidden;min-height:760px}
+    .chapter-bg{display:none}
+    .chapter-head{display:grid;grid-template-columns:180px 1fr;gap:30px;align-items:start}
+    .chapter-index{font:700 12px var(--mono);letter-spacing:.14em;color:var(--gold);padding-top:20px}
+    .chapter h2{font:400 clamp(4.3rem,10vw,9rem)/.85 var(--display);letter-spacing:-.065em;margin:0;text-transform:uppercase}
+    .chapter-grid{display:grid;grid-template-columns:180px 1.1fr .9fr;gap:30px;margin-top:80px}
+    .chapter-rule{height:1px;background:var(--gold);margin-top:14px;width:55px}
+    .chapter-copy{font-size:clamp(1.15rem,2vw,1.65rem);line-height:1.6;margin:0;color:var(--bone-2);max-width:700px}
+    .cap-list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+    .cap-list li{display:flex;justify-content:space-between;gap:18px;padding:15px 0;border-bottom:1px solid var(--line);font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+    .cap-list span{color:var(--ash)}
+    .showroom{padding:130px 0}
+    .section-label{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:54px;color:var(--gold);font:700 11px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+    .section-label:after{content:"";height:1px;background:var(--line);flex:1;margin-inline-start:20px}
+    .showroom h2,.story h2,.faq h2,.contact h2{font:400 clamp(3.8rem,8vw,7.5rem)/.9 var(--display);letter-spacing:-.055em;margin:0}
+    html[lang="fa"] .showroom h2,html[lang="fa"] .story h2,html[lang="fa"] .faq h2,html[lang="fa"] .contact h2{font-family:var(--body);font-weight:700;line-height:1.35;letter-spacing:-.035em}
+    html[lang="fa"] .chapter h2{font-family:var(--body);font-weight:700;line-height:1.25;letter-spacing:-.035em;text-transform:none;font-size:clamp(3.8rem,8vw,7rem)}
+    .projects{margin-top:76px;border-top:1px solid var(--line)}
+    .project{display:grid;grid-template-columns:90px 1fr 1fr 40px;gap:28px;align-items:center;padding:30px 0;border-bottom:1px solid var(--line);transition:background .2s,padding .2s}
+    .project:hover{background:var(--ink-2);padding-inline:18px}
+    .project-num{font:11px var(--mono);color:var(--gold)}
+    .project h3{font:400 clamp(1.65rem,3vw,2.7rem)/1.1 var(--display);margin:0}
+    html[lang="fa"] .project h3{font-family:var(--body);font-weight:600}
+    .project p{margin:0;color:var(--ash);font-size:.94rem}.project-arrow{font-size:1.4rem;color:var(--gold)}
+    .project[href]{cursor:pointer}.project:not([href]) .project-arrow{opacity:.2}
+    .story{padding:140px 0;overflow:hidden}
+    .story-grid{display:grid;grid-template-columns:minmax(300px,.82fr) 1.18fr;gap:clamp(50px,9vw,130px);align-items:center}
+    .portrait-wrap{position:relative;padding:18px 18px 0 0}
+    html[dir="rtl"] .portrait-wrap{padding:18px 0 0 18px}
+    .portrait-wrap:before{content:"";position:absolute;inset:0 0 18px 18px;border:1px solid var(--gold)}
+    html[dir="rtl"] .portrait-wrap:before{inset:0 18px 18px 0}
+    .portrait-wrap img{position:relative;width:100%;aspect-ratio:3/4;display:block;object-fit:cover;object-position:50% 48%;filter:grayscale(22%) contrast(1.03)}
+    .portrait-note{position:absolute;inset-inline-start:-24px;inset-block-end:42px;background:var(--gold);color:#090909;padding:10px 14px;font:700 10px var(--mono);letter-spacing:.08em;transform:rotate(-90deg);transform-origin:left bottom}
+    html[dir="rtl"] .portrait-note{transform:rotate(90deg);transform-origin:right bottom}
+    .story-copy p{font-size:1.08rem;color:var(--bone-2);max-width:720px}.story-copy .lead{font-size:clamp(1.35rem,2.4vw,2rem);color:var(--bone);line-height:1.55;margin-top:42px}
+    .story-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:38px}.story-tags span{border:1px solid var(--line);padding:8px 12px;font:10px var(--mono);color:var(--bone-2)}
+    .faq{padding:130px 0}.faq-layout{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(50px,9vw,130px)}
+    .faq-list{border-top:1px solid var(--line)}
+    .faq-item{border-bottom:1px solid var(--line)}
+    .faq-q{width:100%;border:0;background:none;display:grid;grid-template-columns:35px 1fr 30px;gap:16px;text-align:start;padding:24px 0;cursor:pointer;align-items:start}
+    .faq-q .n{color:var(--gold);font:10px var(--mono);padding-top:6px}.faq-q .q{font-weight:700;font-size:1.03rem}.faq-q .plus{font:400 24px/1 var(--mono);transition:transform .2s;color:var(--ash)}
+    .faq-q[aria-expanded="true"] .plus{transform:rotate(45deg);color:var(--gold)}
+    .faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s}.faq-a>div{overflow:hidden}.faq-a p{margin:0;padding:0 46px 24px 51px;color:var(--bone-2)}
+    .faq-q[aria-expanded="true"]+.faq-a{grid-template-rows:1fr}
+    .contact{padding:140px 0 55px;min-height:90svh;display:flex;align-items:center;overflow:hidden}
+    .contact:before{content:none}
+    .contact-grid{position:relative;display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(50px,9vw,130px);align-items:start}
+    .contact-intro p{max-width:520px;color:var(--bone-2);font-size:1.1rem;margin:32px 0}
+    .github-link{display:inline-flex;align-items:center;gap:14px;border-bottom:1px solid var(--gold);padding:10px 0;color:var(--gold);font:700 11px var(--mono);letter-spacing:.06em}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.field{display:flex;flex-direction:column;gap:8px}.field.full{grid-column:1/-1}
+    label{font:10px var(--mono);letter-spacing:.1em;color:var(--ash);text-transform:uppercase}
+    input,textarea{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--bone);padding:11px 2px 13px;border-radius:0;outline:none}
+    input:focus,textarea:focus{border-color:var(--gold)}textarea{min-height:130px;resize:vertical}
+    .form-actions{grid-column:1/-1;display:flex;align-items:center;gap:18px;margin-top:12px;flex-wrap:wrap}
+    .copy-btn{border:1px solid var(--gold);background:var(--gold);color:#090909;padding:13px 22px;font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+    .copy-btn:hover{background:var(--bone);border-color:var(--bone)}
+    .form-note{font-size:.82rem;color:var(--ash)}
+    .copy-status{min-height:1.4em;color:var(--gold);font-size:.85rem}
+    footer{border-top:1px solid var(--line);padding:25px 0 34px;color:var(--ash);font:10px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+    .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .reveal{opacity:1;transform:none}.hero-inner{animation:heroEnter .65s ease both}@keyframes heroEnter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+    html[dir="rtl"] .mono,html[dir="rtl"] .dossier,html[dir="rtl"] .section-label,html[dir="rtl"] .chapter-index,html[dir="rtl"] .stat span,html[dir="rtl"] .project-num,html[dir="rtl"] label,html[dir="rtl"] footer{letter-spacing:0;text-transform:none}
+    @media(max-width:800px){
+      .wrap{width:min(100% - 34px,var(--max))}.site-nav{inset-block-start:12px}.nav-links{display:none}.nav-inner{justify-content:flex-end}.hero{padding:125px 0 56px;min-height:94svh}.hero-sub{grid-template-columns:1fr;gap:24px}.hero-aside{justify-content:flex-start}.hero-skills{margin-top:46px}.manifesto{padding:90px 0}.chapter{padding:90px 0;min-height:0}.chapter-head{grid-template-columns:1fr;gap:15px}.chapter-index{padding:0}.chapter-grid{grid-template-columns:1fr;margin-top:45px}.chapter-rule{display:none}.showroom,.story,.faq{padding:90px 0}.project{grid-template-columns:42px 1fr 24px;gap:12px}.project p{grid-column:2/3;margin-top:-4px}.project-arrow{grid-column:3;grid-row:1/3}.story-grid{grid-template-columns:1fr}.portrait-wrap{max-width:520px}.portrait-note{inset-inline-start:8px}.faq-layout,.contact-grid{grid-template-columns:1fr}.contact{padding:95px 0 45px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.form-actions{grid-column:auto}.faq-a p{padding-inline:51px 18px}.project:hover{padding-inline:8px}
+    }
+    @media(max-width:430px){.hero h1{font-size:clamp(2.75rem,13vw,4.1rem)}.hero-sub{margin-top:30px}.hero-actions{margin-top:28px}.hero-action{flex:1}.chapter h2,html[lang="fa"] .chapter h2{font-size:3.35rem}.showroom h2,.story h2,.faq h2,.contact h2{font-size:3.05rem}.project h3{font-size:1.5rem}.section-label{margin-bottom:35px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.faq-a{transition:none}}
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="wrap nav-inner">
+      <div class="nav-links">
+        <a href="#work" data-i18n="navWork">WORK</a><a href="#about" data-i18n="navAbout">ABOUT</a><a href="#contact" data-i18n="navContact">CONTACT</a>
+      </div>
+      <div class="lang-switch" aria-label="Language switcher">
+        <button type="button" data-lang="fa" class="active" aria-pressed="true">FA</button><button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </nav>
 
-{% block content %}
-<section class="noomo-hero">
-    <div class="noomo-text">
-        <span class="badge">نمونه‌کار شخصی — نسخه سه‌بعدی</span>
-        <h1>حبیب‌الله <span class="accent">رحیمی</span></h1>
-        <p class="tagline">توسعه‌دهنده‌ای که وب را لمس‌پذیر می‌کند</p>
-        <p class="subtitle">جنگو • Three.js • Node.js — عاشق تجربه‌های سه‌بعدی تعاملی</p>
-        <div class="hero-btns">
-            <a href="{% url 'projects' %}" class="btn">دیدن پروژه‌ها</a>
-            <a href="{% url 'contact' %}" class="btn btn-ghost">تماس با من</a>
-        </div>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="dossier" data-i18n="dossier">حبیب‌الله رحیمی / توسعه‌دهنده وب / افغانستان</div>
+      <h1 data-i18n="heroTitle">وب‌سایت و ابزارهای<br><em>کاربردی می‌سازم.</em></h1>
+      <div class="hero-sub">
+        <p data-i18n="heroSub">با Python، Django، JavaScript و Node.js ایده را از طراحی تا اجرای واقعی پیش می‌برم.</p>
+        <div class="hero-aside"><span class="dot"></span><span data-i18n="heroAside">آماده برای همکاری از راه دور</span></div>
+      </div>
+      <div class="hero-actions">
+        <a class="hero-action primary" href="#work" data-i18n="viewWork">دیدن پروژه‌ها</a>
+        <a class="hero-action" href="#about" data-i18n="aboutMe">درباره من</a>
+      </div>
+      <div class="hero-skills"><span data-i18n="focusLabel">تمرکز کاری</span><strong>DJANGO</strong><strong>JAVASCRIPT</strong><strong>NODE.JS</strong><strong>THREE.JS</strong></div>
     </div>
-    <div class="photo-wrap">
-        <div class="photo-3d" id="photo3d">
-            <img src="{% static 'img/profile.jpg' %}" alt="حبیب‌الله رحیمی">
-            <div class="eye-zone" id="eyezone">
-                <div class="eye-glow"></div>
-            </div>
-            <div class="photo-glare"></div>
-        </div>
-    </div>
-    <div class="scroll-hint">اسکرول کن ↓</div>
-</section>
+  </header>
 
-<section class="section">
-    <h2>مهارت‌ها</h2>
-    <div class="skills">
-        {% for skill in skills %}
-        <div class="glass skill-card">
-            <div class="skill-top">
-                <span>{{ skill.name }}</span>
-                <span>{{ skill.level }}٪</span>
-            </div>
-            <div class="bar"><div class="fill" style="width: {{ skill.level }}%"></div></div>
-        </div>
-        {% empty %}
-        <p>هنوز مهارتی ثبت نشده. از پنل ادمین اضافه کن.</p>
-        {% endfor %}
-    </div>
-</section>
+  <main>
+    <section class="manifesto">
+      <div class="wrap reveal">
+        <blockquote data-i18n="manifesto">تمرکزم روی <em>وب‌سایت‌های سریع، ابزارهای کاربردی و اتوماسیون</em> است—از رابط کاربری تا بک‌اند و اجرای نهایی.</blockquote>
+        <div class="sign" data-i18n="manifestoSign">خلاصهٔ تخصص‌ها</div>
+      </div>
+    </section>
 
-{% if featured %}
-<section class="section">
-    <h2>پروژه‌های منتخب</h2>
-    <div class="cards">
-        {% for project in featured %}
-        <a href="{% url 'project_detail' project.pk %}" class="glass card">
-            <h3>{{ project.title }}</h3>
-            <p>{{ project.description|truncatewords:20 }}</p>
-            {% if project.tech %}<small class="tech">{{ project.tech }}</small>{% endif %}
-        </a>
-        {% endfor %}
-    </div>
-</section>
-{% endif %}
-{% endblock %}
+    <section class="chapter" id="code">
+      <div class="chapter-bg" aria-hidden="true">کد</div>
+      <div class="wrap reveal">
+        <div class="chapter-head"><div class="chapter-index">00 // CODE</div><h2 data-i18n="codeTitle">توسعه وب</h2></div>
+        <div class="chapter-grid"><div class="chapter-rule"></div><p class="chapter-copy" data-i18n="codeCopy">از منطق بک‌اند جنگو تا حرکت‌های سه‌بعدی در مرورگر، وب را سرتاسری می‌بینم. هر تصمیم فنی باید به تجربه‌ای سریع‌تر، روشن‌تر و مفیدتر ختم شود.</p><ul class="cap-list"><li>Python <span>Django</span></li><li>JavaScript <span>Three.js</span></li><li>HTML / CSS <span>UI</span></li><li>Node.js <span>Express</span></li></ul></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="craft">
+      <div class="chapter-bg" aria-hidden="true">هنر</div>
+      <div class="wrap reveal">
+        <div class="chapter-head"><div class="chapter-index">01 // CRAFT</div><h2 data-i18n="craftTitle">ساخت محصول</h2></div>
+        <div class="chapter-grid"><div class="chapter-rule"></div><p class="chapter-copy" data-i18n="craftCopy">برای من «تمام‌شده» یعنی قابل استفاده: اپ حسابداری روی اندروید و ویندوز، باتی که با یک وب‌هوک واقعی حرف می‌زند، یا لابراتواری که شبکه را از روی کاغذ به عمل می‌آورد.</p><ul class="cap-list"><li data-i18n="craftOne">اپ‌های چندسکویی <span>APK / Windows</span></li><li data-i18n="craftTwo">بات و اتوماسیون <span>API</span></li><li data-i18n="craftThree">نمونه‌سازی محصول <span>Build</span></li><li data-i18n="craftFour">شبکه و لابراتوار <span>Lab</span></li></ul></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="learn">
+      <div class="chapter-bg" aria-hidden="true">قدرت</div>
+      <div class="wrap reveal">
+        <div class="chapter-head"><div class="chapter-index">02 // LEARN</div><h2 data-i18n="learnTitle">یادگیری مداوم</h2></div>
+        <div class="chapter-grid"><div class="chapter-rule"></div><p class="chapter-copy" data-i18n="learnCopy">یادگیری بخش جدا از کارم نیست؛ خودِ کار است. این روزها روسی می‌خوانم، انگلیسی‌ام را از A1 به B2 می‌برم و عمیق‌تر وارد معماری شبکه و امنیت می‌شوم.</p><ul class="cap-list"><li data-i18n="learnOne">زبان روسی <span>Active</span></li><li data-i18n="learnTwo">انگلیسی <span>A1 → B2</span></li><li data-i18n="learnThree">شبکه‌های بی‌سیم <span>802.11</span></li><li data-i18n="learnFour">امنیت <span>Home Lab</span></li></ul></div>
+      </div>
+    </section>
+
+    <section class="showroom" id="work">
+      <div class="wrap">
+        <div class="section-label reveal" data-i18n="showLabel">SHOWROOM / پروژه‌های منتخب</div>
+        <h2 class="reveal" data-i18n="showTitle">چیزهایی که<br>ساخته‌ام.</h2>
+        <div class="projects reveal">
+          <a class="project" href="https://habibullahrahimi.com" target="_blank" rel="noopener"><span class="project-num">001</span><h3 data-i18n="p1Title">Portfolio / Three.js</h3><p data-i18n="p1Desc">نمونه‌کار شخصی با جنگو و تجربهٔ سه‌بعدی؛ زنده روی وب.</p><span class="project-arrow">↗</span></a>
+          <article class="project"><span class="project-num">002</span><h3>HesabPro</h3><p data-i18n="p2Desc">مدیریت دخل‌وخرج، حساب اشخاص و رسید؛ برای اندروید و ویندوز.</p><span class="project-arrow">—</span></article>
+          <article class="project"><span class="project-num">003</span><h3 data-i18n="p3Title">WhatsApp Bot</h3><p data-i18n="p3Desc">بات مبتنی بر Node/Express با endpoint وب‌هوک.</p><span class="project-arrow">—</span></article>
+          <article class="project"><span class="project-num">004</span><h3 data-i18n="p4Title">MikroTik Lab</h3><p data-i18n="p4Desc">لابراتوار هات‌اسپات برای تمرین معماری و مدیریت شبکه.</p><span class="project-arrow">—</span></article>
+          <article class="project"><span class="project-num">005</span><h3 data-i18n="p5Title">Gold Analyzer</h3><p data-i18n="p5Desc">وب‌اپ تحلیل قیمت طلا؛ پیوند علاقه به بازار و مهندسی نرم‌افزار.</p><span class="project-arrow">—</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="story" id="about">
+      <div class="wrap story-grid">
+        <div class="portrait-wrap reveal"><img src="{% static 'img/profile-hero.jpg' %}" alt="Habibullah Rahimi in front of the Eiffel Tower" data-i18n-alt="portraitAlt"><span class="portrait-note" data-i18n="portraitNote">پاریس / یک قاب از مسیر</span></div>
+        <div class="story-copy reveal"><div class="section-label" data-i18n="storyLabel">PERSON / پشت کد</div><h2 data-i18n="storyTitle">سلام، من<br>حبیب‌الله‌ام.</h2><p class="lead" data-i18n="storyLead">از افغانستان؛ جایی که دسترسی همیشه آسان نیست، اما کنجکاوی راه خودش را پیدا می‌کند.</p><p data-i18n="storyBody">من با ساختن یاد می‌گیرم. یک روز روی رابط کاربری و جنگو کار می‌کنم، روز دیگر شبکه را در لابراتوار باز می‌کنم یا یک بات را به سرویس واقعی وصل می‌کنم. بیرون از کد، فوتبال و فوتسال بازی می‌کنم، لیگ برتر را دنبال می‌کنم و برای بهتر شدن در روسی و انگلیسی وقت می‌گذارم.</p><p data-i18n="storyClose">هدفم ساده است: تبدیل شدن به توسعه‌دهنده‌ای حرفه‌ای که می‌تواند یک مسئله را بفهمد، راه‌حلش را بسازد و تا کارکردن واقعی آن کنارش بماند.</p><div class="story-tags"><span>FOOTBALL</span><span>FUTSAL</span><span>PREMIER LEAGUE</span><span>RUSSIAN</span><span>NETWORKING</span></div></div>
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <div class="wrap faq-layout">
+        <div class="reveal"><div class="section-label">FAQ / 05</div><h2 data-i18n="faqTitle">پرسش‌های<br>سریع.</h2></div>
+        <div class="faq-list reveal">
+          <div class="faq-item"><button class="faq-q" aria-expanded="true"><span class="n">01</span><span class="q" data-i18n="q1">برای همکاری آماده‌ای؟</span><span class="plus">+</span></button><div class="faq-a"><div><p data-i18n="a1">برای پروژه‌های وب، نمونه‌سازی محصول و فرصت‌هایی که جای رشد و ساختن واقعی دارند، آمادهٔ گفتگو هستم.</p></div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="n">02</span><span class="q" data-i18n="q2">بیشتر با چه فناوری‌هایی کار می‌کنی؟</span><span class="plus">+</span></button><div class="faq-a"><div><p data-i18n="a2">Python و Django برای بک‌اند، Node.js و Express برای سرویس‌ها، و JavaScript، Three.js، HTML و CSS برای تجربهٔ وب.</p></div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="n">03</span><span class="q" data-i18n="q3">کجا زندگی می‌کنی؟</span><span class="plus">+</span></button><div class="faq-a"><div><p data-i18n="a3">در افغانستان زندگی می‌کنم و برای همکاری از راه دور آماده‌ام.</p></div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="n">04</span><span class="q" data-i18n="q4">به چه زبان‌هایی حرف می‌زنی؟</span><span class="plus">+</span></button><div class="faq-a"><div><p data-i18n="a4">فارسی زبان اصلی من است. انگلیسی را فشرده می‌خوانم و روسی را هم به‌صورت فعال یاد می‌گیرم.</p></div></div></div>
+          <div class="faq-item"><button class="faq-q" aria-expanded="false"><span class="n">05</span><span class="q" data-i18n="q5">دوست داری چه چیزی بسازی؟</span><span class="plus">+</span></button><div class="faq-a"><div><p data-i18n="a5">محصولات وبی که مسئلهٔ واقعی را حل کنند—ابزارهای کاربردی، اتوماسیون و تجربه‌هایی که هم زیبا باشند و هم دقیق.</p></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="wrap contact-grid">
+        <div class="contact-intro reveal"><div class="section-label" data-i18n="contactLabel">CONTACT / شروع گفتگو</div><h2 data-i18n="contactTitle">یک چیز خوب<br>بسازیم.</h2><p data-i18n="contactCopy">ایده، پروژه یا فرصت همکاری داری؟ پیام را اینجا آماده کن و کپی بگیر، یا مستقیم کارهایم را در گیت‌هاب ببین.</p><a class="github-link" href="https://github.com/rahimihabib194-dotcom" target="_blank" rel="noopener">GITHUB ↗</a></div>
+        <form class="form-grid reveal" id="contactForm" action="{% url 'contact' %}" method="post">
+          {% csrf_token %}
+          <div class="field"><label for="contactName" data-i18n="formName">نام</label><input id="contactName" name="name" autocomplete="name" data-i18n-placeholder="namePh" placeholder="نام شما"></div>
+          <div class="field"><label for="contactEmail" data-i18n="formEmail">ایمیل</label><input id="contactEmail" name="email" type="email" autocomplete="email" data-i18n-placeholder="emailPh" placeholder="you@example.com"></div>
+          <div class="field full"><label for="contactMessage" data-i18n="formMessage">پیام</label><textarea id="contactMessage" name="text" data-i18n-placeholder="messagePh" placeholder="دربارهٔ ایده‌ات بنویس..."></textarea></div>
+          <div class="form-actions"><button class="copy-btn" type="submit" data-i18n="sendBtn">ارسال پیام</button><span class="form-note" data-i18n="formNote">این فرم چیزی ارسال نمی‌کند؛ پیام آماده را برایتان کپی می‌کند.</span></div>
+          <div class="copy-status full" role="status" aria-live="polite">{% if messages %}{% for message in messages %}<p>{{ message }}</p>{% endfor %}{% endif %}</div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer-inner"><span>© 2026 HABIBULLAH RAHIMI</span><span data-i18n="footer">ساخته‌شده با دقت / افغانستان</span></div></footer>
+
+  <script>
+    (function(){
+      var translations={
+        fa:{navWork:'کارها',navAbout:'درباره',navContact:'تماس',dossier:'حبیب‌الله رحیمی / توسعه‌دهنده وب / افغانستان',heroTitle:'وب‌سایت و ابزارهای<br><em>کاربردی می‌سازم.</em>',heroSub:'با Python، Django، JavaScript و Node.js ایده را از طراحی تا اجرای واقعی پیش می‌برم.',heroAside:'آماده برای همکاری از راه دور',viewWork:'دیدن پروژه‌ها',aboutMe:'درباره من',focusLabel:'تمرکز کاری',manifesto:'تمرکزم روی <em>وب‌سایت‌های سریع، ابزارهای کاربردی و اتوماسیون</em> است—از رابط کاربری تا بک‌اند و اجرای نهایی.',manifestoSign:'خلاصهٔ تخصص‌ها',codeTitle:'توسعه وب',codeCopy:'از منطق بک‌اند جنگو تا حرکت‌های سه‌بعدی در مرورگر، وب را سرتاسری می‌بینم. هر تصمیم فنی باید به تجربه‌ای سریع‌تر، روشن‌تر و مفیدتر ختم شود.',craftTitle:'ساخت محصول',craftCopy:'برای من «تمام‌شده» یعنی قابل استفاده: اپ حسابداری روی اندروید و ویندوز، باتی که با یک وب‌هوک واقعی حرف می‌زند، یا لابراتواری که شبکه را از روی کاغذ به عمل می‌آورد.',craftOne:'اپ‌های چندسکویی <span>APK / Windows</span>',craftTwo:'بات و اتوماسیون <span>API</span>',craftThree:'نمونه‌سازی محصول <span>Build</span>',craftFour:'شبکه و لابراتوار <span>Lab</span>',learnTitle:'یادگیری مداوم',learnCopy:'یادگیری بخش جدا از کارم نیست؛ خودِ کار است. این روزها روسی می‌خوانم، انگلیسی‌ام را از A1 به B2 می‌برم و عمیق‌تر وارد معماری شبکه و امنیت می‌شوم.',learnOne:'زبان روسی <span>Active</span>',learnTwo:'انگلیسی <span>A1 → B2</span>',learnThree:'شبکه‌های بی‌سیم <span>802.11</span>',learnFour:'امنیت <span>Home Lab</span>',showLabel:'SHOWROOM / پروژه‌های منتخب',showTitle:'چیزهایی که<br>ساخته‌ام.',p1Title:'Portfolio / Three.js',p1Desc:'نمونه‌کار شخصی با جنگو و تجربهٔ سه‌بعدی؛ زنده روی وب.',p2Desc:'مدیریت دخل‌وخرج، حساب اشخاص و رسید؛ برای اندروید و ویندوز.',p3Title:'WhatsApp Bot',p3Desc:'بات مبتنی بر Node/Express با endpoint وب‌هوک.',p4Title:'MikroTik Lab',p4Desc:'لابراتوار هات‌اسپات برای تمرین معماری و مدیریت شبکه.',p5Title:'Gold Analyzer',p5Desc:'وب‌اپ تحلیل قیمت طلا؛ پیوند علاقه به بازار و مهندسی نرم‌افزار.',portraitAlt:'حبیب‌الله رحیمی روبه‌روی برج ایفل',portraitNote:'پاریس / یک قاب از مسیر',storyLabel:'PERSON / پشت کد',storyTitle:'سلام، من<br>حبیب‌الله‌ام.',storyLead:'از افغانستان؛ جایی که دسترسی همیشه آسان نیست، اما کنجکاوی راه خودش را پیدا می‌کند.',storyBody:'من با ساختن یاد می‌گیرم. یک روز روی رابط کاربری و جنگو کار می‌کنم، روز دیگر شبکه را در لابراتوار باز می‌کنم یا یک بات را به سرویس واقعی وصل می‌کنم. بیرون از کد، فوتبال و فوتسال بازی می‌کنم، لیگ برتر را دنبال می‌کنم و برای بهتر شدن در روسی و انگلیسی وقت می‌گذارم.',storyClose:'هدفم ساده است: تبدیل شدن به توسعه‌دهنده‌ای حرفه‌ای که می‌تواند یک مسئله را بفهمد، راه‌حلش را بسازد و تا کارکردن واقعی آن کنارش بماند.',faqTitle:'پرسش‌های<br>سریع.',q1:'برای همکاری آماده‌ای؟',a1:'برای پروژه‌های وب، نمونه‌سازی محصول و فرصت‌هایی که جای رشد و ساختن واقعی دارند، آمادهٔ گفتگو هستم.',q2:'بیشتر با چه فناوری‌هایی کار می‌کنی؟',a2:'Python و Django برای بک‌اند، Node.js و Express برای سرویس‌ها، و JavaScript، Three.js، HTML و CSS برای تجربهٔ وب.',q3:'کجا زندگی می‌کنی؟',a3:'در افغانستان زندگی می‌کنم و برای همکاری از راه دور آماده‌ام.',q4:'به چه زبان‌هایی حرف می‌زنی؟',a4:'فارسی زبان اصلی من است. انگلیسی را فشرده می‌خوانم و روسی را هم به‌صورت فعال یاد می‌گیرم.',q5:'دوست داری چه چیزی بسازی؟',a5:'محصولات وبی که مسئلهٔ واقعی را حل کنند—ابزارهای کاربردی، اتوماسیون و تجربه‌هایی که هم زیبا باشند و هم دقیق.',contactLabel:'CONTACT / شروع گفتگو',contactTitle:'یک چیز خوب<br>بسازیم.',contactCopy:'ایده، پروژه یا فرصت همکاری داری؟ پیامت را اینجا بفرست، یا مستقیم کارهایم را در گیت‌هاب ببین.',formName:'نام',formEmail:'ایمیل',formMessage:'پیام',namePh:'نام شما',emailPh:'you@example.com',messagePh:'دربارهٔ ایده‌ات بنویس...',copyBtn:'کپی پیام',sendBtn:'ارسال پیام',formNote:'پیامت مستقیم برایم ارسال می‌شود.',copySuccess:'پیام آماده شد و کپی شد.',copyFail:'کپی خودکار ممکن نشد؛ متن را انتخاب و کپی کنید.',copyEmpty:'اول نام و پیام را بنویسید.',footer:'ساخته‌شده با دقت / افغانستان'},
+        en:{navWork:'WORK',navAbout:'ABOUT',navContact:'CONTACT',dossier:'HABIBULLAH RAHIMI / WEB DEVELOPER / AFGHANISTAN',heroTitle:'I build websites<br>and <em>useful tools.</em>',heroSub:'I take ideas from design to working delivery with Python, Django, JavaScript and Node.js.',heroAside:'Available for remote collaboration',viewWork:'VIEW PROJECTS',aboutMe:'ABOUT ME',focusLabel:'FOCUS',manifesto:'My work focuses on <em>fast websites, useful tools and automation</em>—from the interface to the back end and final delivery.',manifestoSign:'CAPABILITIES AT A GLANCE',codeTitle:'CODE',codeCopy:'From Django back-end logic to motion in a Three.js scene, I see the web end to end. Every technical decision should make the experience faster, clearer or more useful.',craftTitle:'CRAFT',craftCopy:'“Finished” means usable: an accounting app running on Android and Windows, a bot speaking through a real webhook, or a network lab that turns diagrams into working knowledge.',craftOne:'CROSS-PLATFORM APPS <span>APK / Windows</span>',craftTwo:'BOTS & AUTOMATION <span>API</span>',craftThree:'PRODUCT PROTOTYPING <span>Build</span>',craftFour:'NETWORKS & LABS <span>Lab</span>',learnTitle:'LEARN',learnCopy:'Learning is not separate from my work; it is the work. Right now I am studying Russian, moving my English from A1 toward B2, and going deeper into network architecture and security.',learnOne:'RUSSIAN <span>Active</span>',learnTwo:'ENGLISH <span>A1 → B2</span>',learnThree:'WIRELESS NETWORKS <span>802.11</span>',learnFour:'SECURITY <span>Home Lab</span>',showLabel:'SHOWROOM / SELECTED PROJECTS',showTitle:'Things I have<br>built.',p1Title:'Portfolio / Three.js',p1Desc:'A personal Django portfolio with a three-dimensional web experience, live on the web.',p2Desc:'Income, expense, personal accounts and receipts for Android and Windows.',p3Title:'WhatsApp Bot',p3Desc:'A Node/Express bot with a working webhook endpoint.',p4Title:'MikroTik Lab',p4Desc:'A hotspot lab for hands-on network architecture and administration.',p5Title:'Gold Analyzer',p5Desc:'A gold-price analysis web app connecting market curiosity with software engineering.',portraitAlt:'Habibullah Rahimi in front of the Eiffel Tower',portraitNote:'PARIS / A FRAME FROM THE JOURNEY',storyLabel:'PERSON / BEHIND THE CODE',storyTitle:'Hey, I’m<br>Habibullah.',storyLead:'From Afghanistan—a place where access is not always easy, but curiosity finds a way.',storyBody:'I learn by building. One day I am shaping an interface and Django back end; the next I am opening up a network in my lab or connecting a bot to a real service. Away from code, I play football and futsal, follow the Premier League, and put in the hours to improve my Russian and English.',storyClose:'My goal is simple: become the kind of professional developer who understands a problem, builds its solution, and stays with it until it works in the real world.',faqTitle:'Quick<br>answers.',q1:'Are you available for work?',a1:'I am open to web projects, product prototypes and opportunities where there is room to grow and build something real.',q2:'What technologies do you work with?',a2:'Python and Django for back ends, Node.js and Express for services, and JavaScript, Three.js, HTML and CSS for the web experience.',q3:'Where are you based?',a3:'I am based in Afghanistan and open to remote collaboration.',q4:'Which languages do you speak?',a4:'Persian is my first language. I am studying English intensively and actively learning Russian.',q5:'What do you want to build?',a5:'Web products that solve real problems—useful tools, automation, and experiences that are both beautiful and precise.',contactLabel:'CONTACT / START A CONVERSATION',contactTitle:'Let’s build<br>something good.',contactCopy:'Have an idea, project or opportunity? Send your message here, or see my work directly on GitHub.',formName:'NAME',formEmail:'EMAIL',formMessage:'MESSAGE',namePh:'Your name',emailPh:'you@example.com',messagePh:'Tell me about your idea...',copyBtn:'COPY MESSAGE',sendBtn:'SEND MESSAGE',formNote:'Your message is sent directly to me.',copySuccess:'Your message is ready and copied.',copyFail:'Automatic copy was unavailable. Select and copy the text manually.',copyEmpty:'Add your name and message first.',footer:'BUILT WITH INTENTION / AFGHANISTAN'}
+      };
+      var current='fa';
+      function setLanguage(lang){
+        current=lang;var dict=translations[lang];
+        document.documentElement.lang=lang;document.documentElement.dir=lang==='fa'?'rtl':'ltr';
+        document.querySelectorAll('[data-i18n]').forEach(function(el){var key=el.getAttribute('data-i18n');if(dict[key]!==undefined)el.innerHTML=dict[key];});
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){var key=el.getAttribute('data-i18n-placeholder');if(dict[key]!==undefined)el.placeholder=dict[key];});
+        document.querySelectorAll('[data-i18n-alt]').forEach(function(el){var key=el.getAttribute('data-i18n-alt');if(dict[key]!==undefined)el.alt=dict[key];});
+        document.querySelectorAll('.lang-switch button').forEach(function(btn){var on=btn.getAttribute('data-lang')===lang;btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',String(on));});
+        document.title=lang==='fa'?'حبیب‌الله رحیمی — توسعه‌دهنده':'Habibullah Rahimi — Developer';
+      }
+      document.querySelectorAll('.lang-switch button').forEach(function(btn){btn.addEventListener('click',function(){setLanguage(btn.getAttribute('data-lang'));});});
+      document.querySelectorAll('.faq-q').forEach(function(btn){btn.addEventListener('click',function(){var open=btn.getAttribute('aria-expanded')==='true';document.querySelectorAll('.faq-q').forEach(function(other){other.setAttribute('aria-expanded','false');});btn.setAttribute('aria-expanded',String(!open));});});
+      var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('in');observer.unobserve(entry.target);}});},{threshold:.12});
+      document.querySelectorAll('.reveal').forEach(function(el){observer.observe(el);});
+            setLanguage('fa');
+    })();
+  </script>
+</body>
+</html>

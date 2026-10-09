@@ -34,7 +34,7 @@ def contact(request):
         if form.is_valid():
             form.save()
             messages.success(request, "پیامت با موفقیت فرستاده شد! به‌زودی جواب می‌دم.")
-            return redirect("contact")
+            return redirect("home")
     else:
         form = ContactForm()
     return render(request, "portfolio/contact.html", {"form": form})
